@@ -1,1 +1,23 @@
 # Write Kubernetes Deployment Script
+apiVersion: apps/v1                   #Specifies the API version for the Deployment resource
+kind: Deployment                      #Defines the type of Kubernetes resource being created
+metadata:
+  name: fastapilibrary-deployment     #The name of the Deployment resource
+spec:
+  replicas: 2                         #Specifies the number of pod replicas to run
+  selector:
+    matchLabels:
+      app: fastapilibrary             #This label selector ensures that the Deployment manages Pods with this label
+  template:
+    metadata:
+      labels:
+        app: fastapilibrary           #Labels to apply to the Pods created by the Deployment. This should match the selector
+    spec:
+      containers:                    # Specifies the list of containers that will run in the Pod.
+      - name: fastapilibrary-container    # The name of the container within the Pod.
+        image: assignment6sit722.azurecr.io/fastapilibrary:latest # The Docker image to use for the container. This specifies the image repository (Azure Container Registry in this case), the image name (`fastapilibrary`), and the tag (`latest`)
+        ports:
+        - containerPort: 5051   # The port on which the container listens inside the Pod. This is the port where the application inside the container will be running and is exposed to other containers or services within the cluster.
+        env:        # The name of the environment variable to set within the container. Environment variables are used to configure the application running inside the container.
+        - name: DATABASE_URL  # The value of the `DATABASE_URL` environment variable. This URL is used to connect the application to a PostgreSQL database and includes the username, password, host, and database name.
+          value: postgresql://dbassignment6sit722_user:RMM2WWMjtJY20rbHn8eVJuOJtHbK8n66@dpg-crat7ilds78s73d9rcm0-a.oregon-postgres.render.com/dbassignment6sit722

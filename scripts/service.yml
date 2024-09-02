@@ -1,0 +1,15 @@
+# Write Kubernetes Deployment Script
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapilibrary
+spec:
+  selector:
+    app: fastapilibrary
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 5051
+      targetPort: 5051
+      #nodePort: 30000
+  #type: NodePort
